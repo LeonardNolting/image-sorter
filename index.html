@@ -324,7 +324,7 @@ height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
 				if (images[active - 1]) images[active - 1].append(-1)
 				images[old].active    = false
 				images[active].active = true
-				if (images[old].status === undefined) images[old].status = Status.NEUTRAL
+				if (active !== old && images[old].status === undefined) images[old].status = Status.NEUTRAL
 			}
 
 			const next     = () => activate(active + 1),
