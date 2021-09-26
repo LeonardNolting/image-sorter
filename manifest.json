@@ -1,0 +1,25 @@
+{
+	"name": "Image Sorter",
+	"short_name": "Image Sorter",
+	"description": "Categorize images with ease.",
+	"start_url": ".",
+	"display": "fullscreen",
+	"background_color": "#000",
+	"theme_color": "#242F38",
+	"lang": "en",
+	"categories": ["photo", "utilities", "productivity", "organization"],
+	"icons": [
+		{
+			"src": "/icons/android-chrome-192x192.png",
+			"sizes": "192x192",
+			"type": "image/png",
+			"purpose": "maskable any"
+		},
+		{
+			"src": "/icons/android-chrome-512x512.png",
+			"sizes": "512x512",
+			"type": "image/png",
+			"purpose": "maskable any"
+		}
+	]
+}

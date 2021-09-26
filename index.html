@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Image Sorter</title>
+		<link rel="manifest" href="manifest.json">
+		<meta name="description" content="Categorize images with ease.">
+
+		<link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png">
+		<link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#242f38">
+		<link rel="shortcut icon" href="/icons/favicon.ico">
+		<meta name="msapplication-TileColor" content="#242f38">
+		<meta name="msapplication-config" content="/browserconfig.xml">
+		<meta name="theme-color" content="#242F38">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+
+		<link rel="apple-touch-startup-image" href="icons/apple-splash-2048-2732.jpg" media="(device-width: 1024px) and (devic
+e-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+		<link rel="apple-touch-startup-image" href="icons/apple-splash-2732-2048.jpg" media="(device-width: 1024px) and (devic
+e-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)">
+		<link rel="apple-touch-startup-image" href="icons/apple-splash-1668-2388.jpg" media="(device-width: 834px) and (device
+-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+		<link rel="apple-touch-startup-image" href="icons/apple-splash-2388-1668.jpg" media="(device-width: 834px) and (device
+-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)">
+		<link rel="apple-touch-startup-image" href="icons/apple-splash-1536-2048.jpg" media="(device-width: 768px) and (device
+-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+		<link rel="apple-touch-startup-image" href="icons/apple-splash-2048-1536.jpg" media="(device-width: 768px) and (device
+-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)">
+		<link rel="apple-touch-startup-image" href="icons/apple-splash-1668-2224.jpg" media="(device-width: 834px) and (device
+-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+		<link rel="apple-touch-startup-image" href="icons/apple-splash-2224-1668.jpg" media="(device-width: 834px) and (device
+-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)">
+		<link rel="apple-touch-startup-image" href="icons/apple-splash-1620-2160.jpg" media="(device-width: 810px) and (device
+-height: 1080px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+		<link rel="apple-touch-startup-image" href="icons/apple-splash-2160-1620.jpg" media="(device-width: 810px) and (device
+-height: 1080px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)">
+		<link rel="apple-touch-startup-image" href="icons/apple-splash-1284-2778.jpg" media="(device-width: 428px) and (device
+-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+		<link rel="apple-touch-startup-image" href="icons/apple-splash-2778-1284.jpg" media="(device-width: 428px) and (device
+-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)">
+		<link rel="apple-touch-startup-image" href="icons/apple-splash-1170-2532.jpg" media="(device-width: 390px) and (device
+-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+		<link rel="apple-touch-startup-image" href="icons/apple-splash-2532-1170.jpg" media="(device-width: 390px) and (device
+-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)">
+		<link rel="apple-touch-startup-image" href="icons/apple-splash-1125-2436.jpg" media="(device-width: 375px) and (device
+-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+		<link rel="apple-touch-startup-image" href="icons/apple-splash-2436-1125.jpg" media="(device-width: 375px) and (device
+-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)">
+		<link rel="apple-touch-startup-image" href="icons/apple-splash-1242-2688.jpg" media="(device-width: 414px) and (device
+-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+		<link rel="apple-touch-startup-image" href="icons/apple-splash-2688-1242.jpg" media="(device-width: 414px) and (device
+-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)">
+		<link rel="apple-touch-startup-image" href="icons/apple-splash-828-1792.jpg" media="(device-width: 414px) and (device-
+height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+		<link rel="apple-touch-startup-image" href="icons/apple-splash-1792-828.jpg" media="(device-width: 414px) and (device-
+height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)">
+		<link rel="apple-touch-startup-image" href="icons/apple-splash-1242-2208.jpg" media="(device-width: 414px) and (device
+-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+		<link rel="apple-touch-startup-image" href="icons/apple-splash-2208-1242.jpg" media="(device-width: 414px) and (device
+-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)">
+		<link rel="apple-touch-startup-image" href="icons/apple-splash-750-1334.jpg" media="(device-width: 375px) and (device-
+height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+		<link rel="apple-touch-startup-image" href="icons/apple-splash-1334-750.jpg" media="(device-width: 375px) and (device-
+height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)">
+		<link rel="apple-touch-startup-image" href="icons/apple-splash-640-1136.jpg" media="(device-width: 320px) and (device-
+height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+		<link rel="apple-touch-startup-image" href="icons/apple-splash-1136-640.jpg" media="(device-width: 320px) and (device-
+height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)">
+
+		<style>
+            * {
+                box-sizing: border-box;
+            }
+
+            html, body {
+                margin: 0;
+                padding: 0;
+            }
+
+            body {
+                overflow: hidden;
+                font-family: sans-serif;
+            }
+
+            html, body, main, #images, #controls {
+                width: 100%;
+                height: 100%;
+            }
+
+            #images {
+                position: relative;
+                z-index: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                --max-y: 0;
+            }
+
+            .image {
+                position: absolute;
+                flex-grow: 1;
+                width: 100%;
+                height: 100%;
+                --url: #333;
+                background: var(--url);
+                background-position: center;
+                background-size: contain;
+                background-repeat: no-repeat;
+
+                --offset-x: 0;
+                --offset-y: 0;
+                transform: translate(var(--offset-x), var(--offset-y));
+                --index: 0;
+                left: calc(100% * var(--index));
+                top: 0;
+                transition: all 0s ease;
+            }
+
+            body.dragging .image.active {
+                opacity: .8;
+            }
+
+            body:not(.dragging) .image {
+                transition-duration: .2s;
+            }
+
+            .image[data-status=liked] {
+                top: calc(-1 * var(--max-y));
+            }
+
+            .image[data-status=disliked] {
+                top: var(--max-y);
+            }
+
+            .image > img {
+                flex-grow: 1;
+            }
+
+            body:not(.displaying) #images::before {
+                content: "Please choose a folder to start sorting.";
+                padding: 1rem;
+                display: flex;
+            }
+
+            /* Bars */
+            .bar {
+                display: flex;
+                padding: 1rem;
+                position: fixed;
+                width: 100%;
+                transition: all .2s ease;
+                justify-content: space-between;
+                color: white;
+                z-index: 2;
+            }
+
+            #menu {
+                background: #242F38;
+                top: 0;
+                transform: translateY(-100%);
+            }
+
+            #info {
+                bottom: 0;
+                background: #111;
+                transform: translateY(100%);
+            }
+
+            #info p {
+                margin: 0;
+            }
+
+            body.context #menu, body:not(.displaying) #menu, body.context.displaying #info {
+                box-shadow: 0 0 16px 0 black;
+                transform: none !important;
+            }
+
+            #controls {
+                position: fixed;
+                z-index: 1;
+                display: flex;
+                justify-content: space-between;
+                flex-direction: row;
+                top: 0;
+                cursor: pointer;
+            }
+
+            body:not(.displaying) #controls {
+	            display: none;
+            }
+
+            #controls > * {
+                flex-basis: 0;
+                flex-grow: 1;
+                height: 100%;
+                transition: opacity .1s ease;
+                user-select: none;
+            }
+
+            #left, #right {
+                background: rgba(0, 0, 0, .2);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 6em;
+            }
+
+            #left::before, #right::before {
+                padding: 1rem;
+                color: white;
+	            text-shadow: 0 0 32px black;
+            }
+
+            #left::before {
+                content: "❮";
+            }
+
+            #right::before {
+                content: "❯";
+            }
+
+            body.dragging #controls > * {
+                pointer-events: none;
+            }
+
+            body:not(.context) #controls > *, body:not(.displaying) #controls > * {
+                opacity: 0;
+            }
+
+            body.dragging {
+                cursor: grabbing;
+            }
+		</style>
+	</head>
+	<body class="context">
+		<header id="menu" class="bar">
+			<button id="picker">Choose folder</button>
+		</header>
+
+		<main>
+			<div id="images"></div>
+			<div id="controls">
+				<div id="left"></div>
+				<div id="center"></div>
+				<div id="right"></div>
+			</div>
+		</main>
+
+		<footer id="info" class="bar">
+			<p id="name"></p>
+		</footer>
+
+		<script>
+			if ("serviceWorker" in navigator) navigator.serviceWorker.register("/service-worker.js");
+		</script>
+
+		<script>
+			const container = document.getElementById("images")
+
+			let threshold
+			let maxY
+			const onResize = () => {
+				const minViewport = Math.min(innerHeight, innerWidth)
+				threshold         = .1 * minViewport
+				maxY              = .2 * innerHeight
+				container.style.setProperty("--max-y", maxY + "px")
+			}
+			onResize()
+			addEventListener("resize", onResize)
+
+			const classProperty = name => ({
+				set(value) {
+					document.body.classList[value ? "add" : "remove"](name)
+				},
+				get () {
+					return document.body.classList.contains(name)
+				}
+			})
+			Object.defineProperties(document.body, {
+				dragging: classProperty("dragging"),
+				maybeDragging: classProperty("maybe-dragging"),
+				pressing: classProperty("pressing"),
+				displaying: classProperty("displaying"),
+				context: classProperty("context"),
+			})
+
+			let direction = null
+
+			const control  = (name, onclick) => {
+				const element   = document.getElementById(name)
+				element.onclick = event => {
+					console.log(document.body.dragging)
+					if (document.body.dragging === false) onclick(event)
+				}
+				return element
+			}
+			const controls = {
+				element: document.getElementById("controls"),
+				left:    control("left", () => previous()),
+				center:  control("center", () => document.body.context = !document.body.context),
+				right:   control("right", () => next()),
+			};
+
+			let images      = null
+			let directories = null
+
+			let active
+			const activate = index => {
+				if (images === null) return
+				if (images.length === 0) return
+				const old = active
+				active    = Math.max(0, Math.min(images.length - 1, index || 0));
+				if (old !== active) {
+					if (images[old - 1] && old - 1 !== active && old - 1 !== active + 1) images[old - 1].remove();
+					if (images[old + 1] && old + 1 !== active && old + 1 !== active - 1) images[old + 1].remove();
+					if (old !== active - 1 && old !== active + 1) images[old].remove();
+				}
+
+				images[active].append(0)
+				if (images[active + 1]) images[active + 1].append(1)
+				if (images[active - 1]) images[active - 1].append(-1)
+				images[old].active    = false
+				images[active].active = true
+				if (active !== old && images[old].status === undefined) images[old].status = Status.NEUTRAL
+			}
+
+			const next     = () => activate(active + 1),
+			      previous = () => activate(active - 1),
+			      up       = image => {
+				      if (image.status !== Status.LIKED) {
+					      image.status = (image.status === Status.NEUTRAL || image.status === undefined) ? Status.LIKED : Status.NEUTRAL
+					      setTimeout(next, 100)
+				      }
+			      },
+			      down     = image => {
+				      if (image.status !== Status.DISLIKED) {
+					      image.status = (image.status === Status.NEUTRAL || image.status === undefined) ? Status.DISLIKED : Status.NEUTRAL
+					      setTimeout(next, 100)
+				      }
+			      }
+
+			// Gestures
+			{
+				let downX  = undefined
+				let downY  = undefined
+				let deltaX = undefined
+				let deltaY = undefined
+
+				const start = ({clientX, clientY}) => {
+					      downX                  = clientX
+					      downY                  = clientY
+					      direction              = null
+					      document.body.dragging = false
+					      document.body.pressing = true
+				      },
+				      move  = ({clientX, clientY}) => {
+					      if (images === null || images.length - 1 < active || !document.body.pressing) return
+					      const image = images[active];
+					      deltaX      = clientX - downX
+					      deltaY      = clientY - downY
+
+					      document.body.maybeDragging = true
+
+					      // minimum delta to prevent accidental drag operations
+					      if (Math.abs(deltaX) > 4 || Math.abs(deltaY) > 4) {
+						      if (direction === null) {
+							      if (Math.abs(deltaX) > Math.abs(deltaY)) {
+								      if (deltaX > 0) direction = "right"
+								      else direction = "left"
+							      } else {
+								      if (deltaY > 0) direction = "down"
+								      else direction = "up"
+							      }
+						      }
+						      if (direction === "right") {
+							      image.offsetX = deltaX
+							      if (images[active - 1]) images[active - 1].offsetX = deltaX
+						      } else if (direction === "left") {
+							      image.offsetX = deltaX
+							      if (images[active + 1]) images[active + 1].offsetX = deltaX
+						      } else if (direction === "down" || direction === "up") image.offsetY = deltaY > 0 ?
+							      Math.min(maxY, deltaY) :
+							      Math.max(-maxY, deltaY)
+
+						      // transition after passing minimum delta
+						      document.body.dragging = true
+					      }
+				      },
+				      end   = () => {
+					      if (images === null || images.length - 1 < active) return
+					      document.body.pressing      = false
+					      const image                 = images[active];
+					      document.body.maybeDragging = false
+					      document.body.dragging      = false
+					      image.offsetX               = 0
+					      if (images[active - 1]) images[active - 1].offsetX = 0
+					      if (images[active + 1]) images[active + 1].offsetX = 0
+					      image.offsetY = 0
+
+					      if ((direction === "up" || direction === "down") && Math.abs(deltaY) > threshold) {
+						      if (direction === "up") up(image)
+						      else down(image)
+					      } else if ((direction === "left" || direction === "right") && Math.abs(deltaX) > threshold) {
+						      if (direction === "left") next()
+						      else previous()
+					      }
+				      };
+
+				if (window.PointerEvent) {
+					// Add Pointer Event Listener
+					controls.element.addEventListener('pointerdown', start, true);
+					controls.element.addEventListener('pointermove', move, true);
+					controls.element.addEventListener('pointerup', end, true);
+					controls.element.addEventListener('pointercancel', end, true);
+				} else {
+					// Add Touch Listener
+					controls.element.addEventListener('touchstart', event => start(event.touches[0]), true);
+					controls.element.addEventListener('touchmove', event => move(event.touches[0]), true);
+					controls.element.addEventListener('touchend', end, true);
+					controls.element.addEventListener('touchcancel', end, true);
+
+					// Add Mouse Listener
+					controls.element.addEventListener('mousedown', start, true);
+					controls.element.addEventListener('mousemove', move, true);
+					controls.element.addEventListener('mouseup', end, true);
+				}
+			}
+
+			// Keyboard
+			document.addEventListener("keyup", ({key}) => {
+				if (images === null || images.length - 1 < active) return
+				const image = images[active]
+				switch (key) {
+					case "ArrowUp":
+					case "w":
+						up(image)
+						break;
+					case "ArrowDown":
+					case "s":
+						down(image)
+						break;
+					case "ArrowLeft":
+					case "a":
+						previous()
+						break;
+					case "ArrowRight":
+					case "d":
+						next()
+						break;
+				}
+			})
+
+			const menu = document.getElementById("menu")
+			const info = document.getElementById("info")
+			const name = document.getElementById("name")
+
+			const Status = {
+				NEUTRAL:  "neutral",
+				LIKED:    "liked",
+				DISLIKED: "disliked",
+			}
+
+			class Image {
+				name;
+				file;
+				_status = undefined;
+				get status () {
+					return this._status;
+				}
+
+				set status (value) {
+					const old = this.status;
+					if (old === value) return
+					this.element.dataset.status = value
+					this._status                = value;
+
+					(async () => {
+						const copy      = await directories[value].getFileHandle(this.name, {create: true})
+						const writable = await copy.createWritable()
+						await writable.write(this.file)
+						await writable.close()
+						// Write was successful, now delete old file
+						await (old === undefined ? directories.top : directories[old]).removeEntry(this.name)
+					})()
+				}
+
+				constructor (name, file) {
+					this.name = name;
+					this.file = file;
+				}
+
+				_element = undefined
+				get element () {
+					if (this._element) return this._element;
+					const img = document.createElement("div")
+					img.style.setProperty("--url", "url(" + URL.createObjectURL(this.file) + ")")
+					img.classList.add("image")
+					img.draggable = false
+					this._element = img;
+					return this._element;
+				}
+
+				append (index) {
+					this.element.style.setProperty("--index", index)
+					if (this.element.isConnected) return
+					container.append(this.element)
+				}
+
+				remove () {
+					if (!this.element.isConnected) return
+					this.element.remove()
+				}
+
+				set active (value) {
+					this.element.classList[value ? "add" : "remove"]("active")
+					if (value) name.textContent = this.name
+				}
+
+				get active () {
+					return this.element.classList.contains("active")
+				}
+
+				set offsetX (value) {
+					this.element.style.setProperty("--offset-x", value + "px")
+				}
+				set offsetY (value) {
+					this.element.style.setProperty("--offset-y", value + "px")
+				}
+			}
+
+			const picker   = document.getElementById("picker")
+			picker.onclick = async () => {
+				active = 0
+				try {
+					const directoryHandle    = await window.showDirectoryPicker()
+					const getDirectory       = async name => await directoryHandle.getDirectoryHandle(name, {create: true})
+					directories              = {top: directoryHandle}
+					await Promise.all(Object.values(Status).map(async name => {
+						const directory = await getDirectory(name)
+						directories[name] = directory
+						return directory
+					}))
+
+
+					const entries            = directoryHandle.entries()
+					images                   = []
+					document.body.context    = false
+					document.body.displaying = true
+					for await (const [name, fileHandle] of entries) {
+						if (fileHandle instanceof FileSystemDirectoryHandle) continue
+						const file = await fileHandle.getFile()
+						if (file["type"].split("/")[0] !== "image") continue
+						const image = new Image(name, file);
+						images.push(image)
+						if (images.length <= 2) activate(0)
+					}
+				} catch (error) {
+					console.error("Failed to open directory:", error)
+				}
+			}
+		</script>
+	</body>
+</html>
