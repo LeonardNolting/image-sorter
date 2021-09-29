@@ -147,12 +147,14 @@ height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
             }
 
             /* Bars */
-            .bar {
+            .bar, #message {
                 display: flex;
-                padding: 1rem;
                 position: fixed;
                 width: 100%;
                 transition: all .2s ease;
+            }
+            .bar {
+                padding: 1rem;
                 justify-content: space-between;
                 color: white;
                 z-index: 2;
@@ -234,6 +236,32 @@ height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
             body.dragging {
                 cursor: grabbing;
             }
+
+            #message {
+	            top: 0;
+	            color: black;
+	            align-items: center;
+                z-index: 3;
+                padding: .6rem;
+            }
+            #message[data-type=error] {
+	            background: #ff7c7c;
+            }
+            #message-text {
+	            flex-grow: 1;
+	            margin: 0;
+	            padding: 0;
+            }
+            body:not(.message) #message {
+	            transform: translateY(-100%);
+            }
+            #message button {
+	            background: none;
+	            outline: none;
+	            border: none;
+	            cursor: pointer;
+	            line-height: 0;
+            }
 		</style>
 	</head>
 	<body class="context">
@@ -242,6 +270,10 @@ height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
 		</header>
 
 		<main>
+			<div id="message">
+				<p id="message-text"></p>
+				<button onclick="document.body.message = false">✖</button>
+			</div>
 			<div id="images"></div>
 			<div id="controls">
 				<div id="left"></div>
@@ -259,7 +291,9 @@ height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
 		</script>
 
 		<script>
-			const container = document.getElementById("images")
+			const container = document.getElementById("images"),
+			      message = document.getElementById("message"),
+			      messageText = document.getElementById("message-text")
 
 			let threshold
 			let maxY
@@ -286,6 +320,7 @@ height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
 				pressing: classProperty("pressing"),
 				displaying: classProperty("displaying"),
 				context: classProperty("context"),
+				message: classProperty("message"),
 			})
 
 			let direction = null
@@ -293,7 +328,6 @@ height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
 			const control  = (name, onclick) => {
 				const element   = document.getElementById(name)
 				element.onclick = event => {
-					console.log(document.body.dragging)
 					if (document.body.dragging === false) onclick(event)
 				}
 				return element
@@ -325,7 +359,7 @@ height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
 				if (images[active - 1]) images[active - 1].append(-1)
 				images[old].active    = false
 				images[active].active = true
-				if (active !== old && images[old].status === undefined) images[old].status = Status.NEUTRAL
+				if (active > old && images[old].status === undefined) images[old].status = Status.NEUTRAL
 			}
 
 			const next     = () => activate(active + 1),
@@ -464,13 +498,25 @@ height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
 				DISLIKED: "disliked",
 			}
 
+			function report(error, prefix = "Something went wrong", postfix = null) {
+				let text = prefix + ": " + error
+				if (postfix !== null) text += "\n" + postfix
+				console.error(text)
+				console.trace(error)
+				document.body.message = true
+				message.dataset.type = "error"
+				messageText.textContent = text
+			}
+
 			class Image {
 				name;
-				file;
 				_status = undefined;
 				get status () {
 					return this._status;
 				}
+				file;
+
+				processes = []
 
 				set status (value) {
 					const old = this.status;
@@ -478,19 +524,41 @@ height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
 					this.element.dataset.status = value
 					this._status                = value;
 
-					(async () => {
-						const copy      = await directories[value].getFileHandle(this.name, {create: true})
-						const writable = await copy.createWritable()
-						await writable.write(this.file)
-						await writable.close()
-						// Write was successful, now delete old file
-						await (old === undefined ? directories.top : directories[old]).removeEntry(this.name)
-					})()
+					Promise.all(this.processes).then(() => {
+						const process = (async () => {
+							console.info("Started moving from " + old + " to " + value)
+							try {
+								const oldHandle = await (old === undefined ?
+									directories.top :
+									directories[old]).getFileHandle(this.name)
+								this.file       = await oldHandle.getFile()
+								const copy      = await directories[value].getFileHandle(this.name, {create: true})
+								const writable  = await copy.createWritable()
+								await writable.write(this.file)
+								await writable.close()
+
+								try {
+									// Write was successful, now delete old file
+									await (old === undefined ?
+										directories.top :
+										directories[old]).removeEntry(this.name)
+								} catch(error) {
+									report(error, "Couldn't delete file")
+								}
+							} catch(error) {
+								report(error, "Couldn't move file", "The original file wasn't deleted.")
+							} finally {
+								this.processes.splice(this.processes.indexOf(process), 1)
+								console.info("Finished moving from " + old + " to " + value)
+							}
+						})()
+						this.processes.push(process)
+					})
 				}
 
 				constructor (name, file) {
-					this.name = name;
-					this.file = file;
+					this.name   = name;
+					this.file   = file;
 				}
 
 				_element = undefined
@@ -539,27 +607,34 @@ height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
 					const directoryHandle    = await window.showDirectoryPicker()
 					const getDirectory       = async name => await directoryHandle.getDirectoryHandle(name, {create: true})
 					directories              = {top: directoryHandle}
-					await Promise.all(Object.values(Status).map(async name => {
-						const directory = await getDirectory(name)
-						directories[name] = directory
-						return directory
-					}))
+					try {
+						await Promise.all(Object.values(Status).map(async name => {
+							const directory   = await getDirectory(name)
+							directories[name] = directory
+							return directory
+						}))
 
-
-					const entries            = directoryHandle.entries()
-					images                   = []
-					document.body.context    = false
-					document.body.displaying = true
-					for await (const [name, fileHandle] of entries) {
-						if (fileHandle instanceof FileSystemDirectoryHandle) continue
-						const file = await fileHandle.getFile()
-						if (file["type"].split("/")[0] !== "image") continue
-						const image = new Image(name, file);
-						images.push(image)
-						if (images.length <= 2) activate(0)
+						try {
+							const entries            = directoryHandle.entries()
+							images                   = []
+							document.body.context    = false
+							document.body.displaying = true
+							for await (const [name, fileHandle] of entries) {
+								if (fileHandle instanceof FileSystemDirectoryHandle) continue
+								const file = await fileHandle.getFile()
+								if (file["type"].split("/")[0] !== "image") continue
+								const image = new Image(name, file);
+								images.push(image)
+								if (images.length <= 2) activate(0)
+							}
+						} catch(error) {
+							report(error, "Failed to iterate through files in directory")
+						}
+					} catch(error) {
+						report(error, "Failed to get/create directories (" + Object.values(Status).join(", ") + ")")
 					}
 				} catch (error) {
-					console.error("Failed to open directory:", error)
+					report(error, "Failed to open directory")
 				}
 			}
 		</script>
